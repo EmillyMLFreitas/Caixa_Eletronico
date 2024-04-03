@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Caixa Eletrônico | Banco</title>
+
+</head>
+
+<body>
+	<script>
+		var saldo = 100.5; //Float
+		var nome = prompt("Informe o seu nome: ");
+		alert("Olá " + nome + " é um prazer ter você por aqui!");
+
+
+		function inicio() {
+			var escolha = parseInt(prompt('Selecione uma opção 1. Saldo | 2. Extrato | 3. Saque | 4. Depósito | 5. Transferencia | 6. Sair'));
+
+			switch (escolha) {
+				case 1:
+					ver_saldo();
+					break;
+
+				case 2:
+					ver_extrato();
+					break;
+
+				case 3:
+					fazer_saque();
+					break;
+
+				case 4:
+					fazer_deposito();
+					break;
+
+				case 5:
+					fazer_transferencia();
+					break;
+
+				case 6:
+					sair();
+					break;
+			}
+
+			if (isNaN(escolha) || escolha < 1 || escolha > 6) {
+				erro();
+			}
+		}
+
+		function validar_senha() {
+			var senha = 3589;
+			var pedir_senha = parseInt(prompt('Por favor, informe sua senha: '));
+
+			if (pedir_senha !== senha) {
+				alert('Senha incorreta! Digite novamente: ')
+				validar_senha();
+			}
+		}
+
+		function ver_saldo() {
+			validar_senha();
+			alert('Seu saldo atual é: ' + saldo);
+			inicio();
+		}
+
+		function fazer_deposito() {
+			validar_senha();
+			var deposito = parseFloat(prompt('Qual o valor para depósito?'));
+			// Not a Number
+			if (isNaN(deposito) || deposito === '') {
+				alert('Por favor, informe um número:');
+				fazer_deposito();
+			}
+			else if (deposito <= 0) {
+				alert('Operação não autorizada');
+				fazer_deposito();
+			}
+			else {
+				saldo += deposito;
+				ver_saldo();
+			}
+			inicio();
+		}
+
+		function fazer_saque() {
+			validar_senha();
+			var saque = parseFloat(prompt('Informe o valor para saque?'));
+			if (isNaN(saque) || saque === '') {
+				alert('Por favor, informe um número:');
+				fazer_saque();
+			}
+			else if (saque > saldo || saque <= 0) {
+				alert('Operação não autorizada');
+				fazer_saque();
+			}
+			else {
+				saldo -= saque;
+				ver_saldo();
+			}
+			inicio();
+		}
+
+		function ver_extrato() {
+			validar_senha();
+			alert('Extrato\nSaldo atual: ' + saldo + '\n\n Data: 10/02/2024 \n Descrição: Compra no Supermercado \n Valor: R$ 80,00 \n Saldo: R$ 220,00 \n\n Data: 15/02/2024 \n Descrição: Depósito de Salário \n Valor: R$ 1.700,00 \n Saldo: R$ 1.920,00 \n\n Data: 20/02/2024 \n Descrição: Saque em Caixa Eletrônico \n Valor: R$ 1200,00 \n Saldo: R$ 1.720,00');
+			inicio();
+		}
+
+		function fazer_transferencia() {
+			validar_senha();
+			var numConta = parseInt(prompt('Informe o número da conta que deseja transferir: '));
+
+			if (isNaN(numConta) || numConta === '') {
+				alert('Por favor, informe um número:');
+				fazer_transferencia();
+			}
+
+			var valorT = parseFloat(prompt('Informe o valor para a transferência?'));
+			if (valorT > saldo || valorT <= 0) {
+				alert('Operação não autorizada');
+				fazer_transferencia();
+			}
+			else {
+				saldo -= valorT;
+				ver_saldo();
+			}
+
+			inicio();
+		}
+
+		function erro() {
+			alert('Por favor, informe um número entre 1 e 6');
+			inicio();
+		}
+
+		function sair() {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+				alert(nome + ', foi um prazer ter você por aqui!');
+				window.close();
+			} else {
+				inicio();
+			}
+		}
+
+		inicio();
+	</script>
+</body>
+
+</html>
